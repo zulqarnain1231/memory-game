@@ -21,13 +21,13 @@ const Card: React.FC<ICardProps> = ({ card, onClick, disabled }) => {
     <div className="card h-[300px] w-full relative">
       <div className={className}>
         <img
-          className="front h-[300px] w-full object-cover"
+          className="front h-[300px] w-full object-cover rounded-xl"
           src={card.image}
           alt={card.name}
         />
         <img
-          className="back h-[300px] w-full object-cover"
-          src="/img/cover.png"
+          className="back h-[300px] w-full object-cover rounded-xl"
+          src="/Assets/cover.jpg"
           alt="Card Cover"
           onClick={handleClick}
         />

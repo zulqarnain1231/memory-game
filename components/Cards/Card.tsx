@@ -18,24 +18,19 @@ const Card: React.FC<ICardProps> = ({ card, onClick, disabled }) => {
   };
 
   return (
-    <div className="w-full h-[200px] card">
+    <div className="card h-[300px] w-full relative">
       <div className={className}>
-        <div className="w-full h-full relative">
-          <Image
-            className="front object-cover"
-            src={card.image}
-            alt={card.name}
-            fill
-          />
-        </div>
-        <div className="w-full h-full relative">
-          <Image
-            className="back object-cover"
-            src="/img/cover.png"
-            alt="Card Cover"
-            onClick={handleClick}
-          />
-        </div>
+        <img
+          className="front h-[300px] w-full object-cover"
+          src={card.image}
+          alt={card.name}
+        />
+        <img
+          className="back h-[300px] w-full object-cover"
+          src="/img/cover.png"
+          alt="Card Cover"
+          onClick={handleClick}
+        />
       </div>
     </div>
   );

@@ -1,6 +1,6 @@
 import { createContext, useState, useContext, useEffect } from "react";
 import { IMemoryCard } from "../types/types";
-import { CardArray } from "../utils/fake_db";
+import { CardArray } from "../constants/Data/DummyData";
 
 type MemoryProviderType = {
   children: React.ReactNode;

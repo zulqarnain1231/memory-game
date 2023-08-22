@@ -2,7 +2,7 @@
 @tailwind components;
 @tailwind utilities;
 
-.app .card-container .card .front {
+.card .front {
   position: absolute;
   inset: 0;
   z-index: 99;
@@ -11,18 +11,18 @@
   transition: all ease-in 0.2s;
 }
 
-.app .card-container .card .flipped .front {
+.card .flipped .front {
   transform: rotateY(0deg);
   transition-delay: 0.2s;
   cursor: not-allowed;
 }
 
-.app .card-container .card .back {
+.card .back {
   transition: all 0.2s ease-in;
   transition-delay: 0.2s;
 }
 
-.app .card-container .card .flipped .back {
+.card .flipped .back {
   transform: rotateY(90deg);
   transition-delay: 0s;
 }

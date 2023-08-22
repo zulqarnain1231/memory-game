@@ -1,7 +1,6 @@
 import { createContext, useState, useContext, useEffect } from "react";
 import { IMemoryCard } from "../types/types";
 import { CardArray } from "../constants/Data/DummyData";
-
 type MemoryProviderType = {
   children: React.ReactNode;
 };
@@ -76,6 +75,13 @@ const MemoryProvider = ({ children }: MemoryProviderType) => {
    * It flips the card and checks if the card is a match
    * @param card
    */
+  const audioSources: string[] = [
+    "/Assets/Audio/dinosaur1",
+    "/Assets/Audio/dinosaur2",
+    "/Assets/Audio/dinosaur3",
+    "/Assets/Audio/dinosaur4",
+    "/Assets/Audio/dinosaur5",
+  ];
   const handleCardItemClick = (card: IMemoryCard) => {
     if (!disabledCards) {
       setCards((prevCard) =>
@@ -88,7 +94,11 @@ const MemoryProvider = ({ children }: MemoryProviderType) => {
         })
       );
     }
-
+    const audio = new Audio(card.sound);
+    audio.play();
+    setTimeout(() => {
+      audio.pause();
+    }, 2000);
     choiceOne ? setChoiceTwo(card) : setChoiceOne(card);
   };
 

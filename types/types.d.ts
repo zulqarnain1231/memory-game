@@ -4,4 +4,5 @@ export interface IMemoryCard {
     name: string;
     isFlipped: boolean;
     isMatched: boolean;
+    sound:string;
 }

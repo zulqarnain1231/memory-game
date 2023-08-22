@@ -1,5 +1,6 @@
 import React from "react";
 import { IMemoryCard } from "../../types/types";
+import Image from "next/image";
 
 type ICardProps = {
   card: IMemoryCard;
@@ -17,15 +18,24 @@ const Card: React.FC<ICardProps> = ({ card, onClick, disabled }) => {
   };
 
   return (
-    <div className="card">
+    <div className="w-full h-[200px] card">
       <div className={className}>
-        <img className="front" src={card.image} alt={card.name} />
-        <img
-          className="back"
-          src="/img/cover.png"
-          alt="Card Cover"
-          onClick={handleClick}
-        />
+        <div className="w-full h-full relative">
+          <Image
+            className="front object-cover"
+            src={card.image}
+            alt={card.name}
+            fill
+          />
+        </div>
+        <div className="w-full h-full relative">
+          <Image
+            className="back object-cover"
+            src="/img/cover.png"
+            alt="Card Cover"
+            onClick={handleClick}
+          />
+        </div>
       </div>
     </div>
   );

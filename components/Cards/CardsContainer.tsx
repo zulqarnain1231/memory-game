@@ -10,6 +10,7 @@ const CardsContainer = () => {
     disabledCards,
     checkWin,
     turn,
+    handleGameOver,
     score,
     gameOver,
     startGame,
@@ -44,6 +45,7 @@ const CardsContainer = () => {
       allowOutsideClick: false,
       allowEscapeKey: false,
       allowEnterKey: false,
+
       preConfirm: () => {
         startGame();
       },

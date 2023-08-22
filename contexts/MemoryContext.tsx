@@ -14,6 +14,7 @@ type MemoryContextType = {
   score: number;
   round: number;
   gameOver: boolean;
+  handleGameOver: () => void;
   timeLeft: number;
   handleCardItemClick: (card: IMemoryCard) => void;
   disabledCards: boolean;
@@ -28,6 +29,7 @@ const initialState = {
   round: 1,
   score: 0,
   gameOver: false,
+  handleGameOver: () => {},
   timeLeft: 60,
   handleCardItemClick: () => {},
   disabledCards: false,
@@ -109,10 +111,12 @@ const MemoryProvider = ({ children }: MemoryProviderType) => {
    * @returns void
    */
   const startGame = () => {
+    setGameOver(false);
+    setTimeLeft(60);
     shuffleCards();
     setScore(0);
+    setRound(1);
     setTurn(0);
-    setGameOver(false);
   };
 
   /**
@@ -154,7 +158,11 @@ const MemoryProvider = ({ children }: MemoryProviderType) => {
   }, [choiceOne, choiceTwo]);
   const onTimerEnd = () => {
     if (round < 3) {
-      startGame();
+      setGameOver(false);
+      setTimeLeft(60);
+      shuffleCards();
+      setScore(0);
+      setTurn(0);
       setRound((prevvalue) => prevvalue + 1);
       setTimeLeft(60);
     } else {
@@ -162,8 +170,11 @@ const MemoryProvider = ({ children }: MemoryProviderType) => {
       setTimeLeft(0);
     }
   };
+  const handleGameOver = () => {
+    setGameOver(false);
+  };
   useEffect(() => {
-    if (timeLeft > 0) {
+    if (timeLeft > 0 && !checkWin()) {
       const timer = setInterval(() => {
         setTimeLeft(timeLeft - 1);
       }, 1000);
@@ -192,6 +203,7 @@ const MemoryProvider = ({ children }: MemoryProviderType) => {
     score,
     timeLeft,
     handleCardItemClick,
+    handleGameOver,
     disabledCards,
     checkWin,
   };

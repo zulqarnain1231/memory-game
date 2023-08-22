@@ -19,8 +19,8 @@ const CardsContainer = () => {
   if (checkWin()) {
     const MySwal = withReactContent(Swal);
     MySwal.fire({
-      background: "#000",
-      color: "#fff",
+      background: "#191D88 ",
+      color: "#FFC436",
       title: "You've won!",
       text: `You took ${turn} flips to complete the game!`,
       icon: "success",
@@ -36,8 +36,8 @@ const CardsContainer = () => {
   if (gameOver) {
     const MySwal = withReactContent(Swal);
     MySwal.fire({
-      background: "#000",
-      color: "#fff",
+      background: "#FFC436",
+      color: "#191D88 ",
       title: "Game Over!",
       text: `You have used all rounds, Try Again`,
       icon: "error",

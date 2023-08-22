@@ -10,6 +10,8 @@ const CardsContainer = () => {
     disabledCards,
     checkWin,
     turn,
+    score,
+    gameOver,
     startGame,
   } = useMemoryCards();
 
@@ -19,8 +21,25 @@ const CardsContainer = () => {
       background: "#000",
       color: "#fff",
       title: "You've won!",
-      text: `You took ${turn} turns to complete the game!`,
+      text: `You took ${turn} flips to complete the game!`,
       icon: "success",
+      confirmButtonText: "Play Again",
+      allowOutsideClick: false,
+      allowEscapeKey: false,
+      allowEnterKey: false,
+      preConfirm: () => {
+        startGame();
+      },
+    });
+  }
+  if (gameOver) {
+    const MySwal = withReactContent(Swal);
+    MySwal.fire({
+      background: "#000",
+      color: "#fff",
+      title: "Game Over!",
+      text: `You have used all rounds, Try Again`,
+      icon: "error",
       confirmButtonText: "Play Again",
       allowOutsideClick: false,
       allowEscapeKey: false,
@@ -32,7 +51,7 @@ const CardsContainer = () => {
   }
 
   return (
-    <div className="w-full h-full flex items-center justify-center bg-white md:px-8 px-4">
+    <div className="w-full h-full flex items-center justify-center bg-brand-tartary md:px-8 px-4">
       <div className="w-full grid lg:grid-cols-5 md:grid-cols-3 sm:grid-cols-2 gap-4">
         {cards.map((card, index) => (
           <Card

@@ -11,6 +11,10 @@ type MemoryContextType = {
   setCards: React.Dispatch<React.SetStateAction<IMemoryCard[]>>;
   startGame: () => void;
   turn: number;
+  score: number;
+  round: number;
+  gameOver: boolean;
+  timeLeft: number;
   handleCardItemClick: (card: IMemoryCard) => void;
   disabledCards: boolean;
   checkWin: () => boolean;
@@ -21,6 +25,10 @@ const initialState = {
   setCards: () => {},
   startGame: () => {},
   turn: 0,
+  round: 1,
+  score: 0,
+  gameOver: false,
+  timeLeft: 60,
   handleCardItemClick: () => {},
   disabledCards: false,
   checkWin: () => false,
@@ -30,10 +38,14 @@ const MemoryContext = createContext<MemoryContextType>(initialState);
 
 const MemoryProvider = ({ children }: MemoryProviderType) => {
   const [cards, setCards] = useState<IMemoryCard[]>(initialState.cards);
+  const [timeLeft, setTimeLeft] = useState<number>(initialState.timeLeft);
   const [turn, setTurn] = useState<number>(initialState.turn);
+  const [score, setScore] = useState<number>(initialState.score);
   const [choiceOne, setChoiceOne] = useState<IMemoryCard | null>(null);
   const [choiceTwo, setChoiceTwo] = useState<IMemoryCard | null>(null);
   const [disabledCards, setDisabledCards] = useState<boolean>(false);
+  const [round, setRound] = useState<number>(initialState.round);
+  const [gameOver, setGameOver] = useState<boolean>(initialState.gameOver);
 
   const checkWin = () => {
     const isWin = cards.every((card) => card.isMatched);
@@ -98,7 +110,9 @@ const MemoryProvider = ({ children }: MemoryProviderType) => {
    */
   const startGame = () => {
     shuffleCards();
+    setScore(0);
     setTurn(0);
+    setGameOver(false);
   };
 
   /**
@@ -119,6 +133,9 @@ const MemoryProvider = ({ children }: MemoryProviderType) => {
             return card;
           })
         );
+        if (score < 5) {
+          setScore((prevvalue) => prevvalue + 1);
+        }
         resetTurn();
       } else {
         setTimeout(() => {
@@ -135,7 +152,27 @@ const MemoryProvider = ({ children }: MemoryProviderType) => {
       }
     }
   }, [choiceOne, choiceTwo]);
+  const onTimerEnd = () => {
+    if (round < 3) {
+      startGame();
+      setRound((prevvalue) => prevvalue + 1);
+      setTimeLeft(60);
+    } else {
+      setGameOver(true);
+      setTimeLeft(0);
+    }
+  };
+  useEffect(() => {
+    if (timeLeft > 0) {
+      const timer = setInterval(() => {
+        setTimeLeft(timeLeft - 1);
+      }, 1000);
 
+      return () => clearInterval(timer);
+    } else {
+      onTimerEnd();
+    }
+  }, [timeLeft, onTimerEnd]);
   /**
    * @description
    * This function is used to check if the cards are a match
@@ -149,7 +186,11 @@ const MemoryProvider = ({ children }: MemoryProviderType) => {
     cards,
     setCards,
     startGame,
+    round,
+    gameOver,
     turn,
+    score,
+    timeLeft,
     handleCardItemClick,
     disabledCards,
     checkWin,

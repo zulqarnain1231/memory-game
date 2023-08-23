@@ -87,12 +87,7 @@ const MemoryProvider = ({ children }: MemoryProviderType) => {
         })
       );
     }
-    const audio = new Audio(card.sound);
-    audio.play();
-    // to cut the audio to 2 secconds
-    setTimeout(() => {
-      audio.pause();
-    }, 2000);
+
     choiceOne ? setChoiceTwo(card) : setChoiceOne(card);
   };
 
@@ -144,6 +139,12 @@ const MemoryProvider = ({ children }: MemoryProviderType) => {
         if (score < 5) {
           setScore((prevvalue) => prevvalue + 1);
         }
+        const audio = new Audio(choiceOne.sound);
+        audio.play();
+        // to cut the audio to 2 secconds
+        setTimeout(() => {
+          audio.pause();
+        }, 2000);
         resetTurn();
       } else {
         setTimeout(() => {

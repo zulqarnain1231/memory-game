@@ -1,8 +1,9 @@
+import { useState } from "react";
 import Card from "./Card";
 import { useMemoryCards } from "../../contexts/MemoryContext";
 import Swal from "sweetalert2";
 import withReactContent from "sweetalert2-react-content";
-
+import Dialog from "@mui/material/Dialog";
 const CardsContainer = () => {
   const {
     cards,

@@ -1,9 +1,12 @@
 import { useState } from "react";
+import Image from "next/image";
 import Card from "./Card";
 import { useMemoryCards } from "../../contexts/MemoryContext";
 import Swal from "sweetalert2";
 import withReactContent from "sweetalert2-react-content";
 import Dialog from "@mui/material/Dialog";
+import { MdOutlineCancel } from "react-icons/md";
+
 const CardsContainer = () => {
   const {
     cards,
@@ -11,8 +14,9 @@ const CardsContainer = () => {
     disabledCards,
     checkWin,
     turn,
-    handleGameOver,
-    score,
+    matchedImage,
+    matchedImageModal,
+    colseMatchedImage,
     gameOver,
     startGame,
   } = useMemoryCards();
@@ -65,6 +69,39 @@ const CardsContainer = () => {
           />
         ))}
       </div>
+      <Dialog
+        sx={{
+          "& .MuiPaper-root": {
+            borderRadius: "8px",
+            maxWidth: "unset",
+            position: "relative",
+            overflow: "visible",
+          },
+          "& ::-webkit-scrollbar": {
+            width: "0px",
+          },
+        }}
+        open={matchedImageModal}
+        onClose={colseMatchedImage}
+      >
+        <div className={`w-[330px] h-[300px]`}>
+          <button
+            onClick={colseMatchedImage}
+            className="w-[32px] h-[32px] absolute -top-8 right-0  flex justify-center items-center z-10 "
+          >
+            <MdOutlineCancel className="h-full w-full text-white" />
+          </button>
+
+          <div className="w-full h-full relative rounded-lg">
+            <Image
+              src={matchedImage}
+              alt=""
+              className="object-cover rounded-lg"
+              fill
+            />
+          </div>
+        </div>
+      </Dialog>
     </div>
   );
 };

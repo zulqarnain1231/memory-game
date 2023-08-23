@@ -12,21 +12,27 @@ type MemoryContextType = {
   turn: number;
   score: number;
   round: number;
+  matchedImage: string;
   gameOver: boolean;
   handleGameOver: () => void;
   timeLeft: number;
   handleCardItemClick: (card: IMemoryCard) => void;
   disabledCards: boolean;
+  matchedImageModal: boolean;
   checkWin: () => boolean;
+  colseMatchedImage: () => void;
 };
 
 const initialState = {
   cards: CardArray as IMemoryCard[],
   setCards: () => {},
   startGame: () => {},
+  colseMatchedImage: () => {},
   turn: 0,
   round: 1,
   score: 0,
+  matchedImage: "",
+  matchedImageModal: false,
   gameOver: false,
   handleGameOver: () => {},
   timeLeft: 60,
@@ -47,7 +53,12 @@ const MemoryProvider = ({ children }: MemoryProviderType) => {
   const [disabledCards, setDisabledCards] = useState<boolean>(false);
   const [round, setRound] = useState<number>(initialState.round);
   const [gameOver, setGameOver] = useState<boolean>(initialState.gameOver);
-
+  const [matchedImage, setMatchedImage] = useState<string>(
+    initialState.matchedImage
+  );
+  const [matchedImageModal, setMatchedImageModal] = useState<boolean>(
+    initialState.matchedImageModal
+  );
   const checkWin = () => {
     const isWin = cards.every((card) => card.isMatched);
     return isWin;
@@ -123,6 +134,13 @@ const MemoryProvider = ({ children }: MemoryProviderType) => {
    * This function is used to check if the cards are a match
    * @returns void
    */
+  const colseMatchedImage = () => {
+    setMatchedImageModal(false);
+  };
+  const showMatchedImage = (image: string) => {
+    setMatchedImage(image);
+    setMatchedImageModal(true);
+  };
   useEffect(() => {
     if (choiceOne && choiceTwo) {
       setDisabledCards(true);
@@ -145,6 +163,7 @@ const MemoryProvider = ({ children }: MemoryProviderType) => {
         setTimeout(() => {
           audio.pause();
         }, 2000);
+        showMatchedImage(choiceOne.image);
         resetTurn();
       } else {
         setTimeout(() => {
@@ -206,6 +225,9 @@ const MemoryProvider = ({ children }: MemoryProviderType) => {
     gameOver,
     turn,
     score,
+    colseMatchedImage,
+    matchedImageModal,
+    matchedImage,
     timeLeft,
     handleCardItemClick,
     handleGameOver,

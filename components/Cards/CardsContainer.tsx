@@ -93,10 +93,12 @@ const CardsContainer = () => {
           </button>
 
           <div className="w-full h-full relative rounded-lg">
-            <img
+            <Image
               src={matchedImage}
               alt=""
-              className="object-cover rounded-lg w-full h-full"
+              className="object-cover rounded-lg"
+              fill
+              loading="eager"
             />
           </div>
         </div>

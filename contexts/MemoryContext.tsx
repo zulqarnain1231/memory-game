@@ -20,6 +20,7 @@ type MemoryContextType = {
   disabledCards: boolean;
   matchedImageModal: boolean;
   checkWin: () => boolean;
+  matchedName: string;
   colseMatchedImage: () => void;
 };
 
@@ -36,6 +37,7 @@ const initialState = {
   gameOver: false,
   handleGameOver: () => {},
   timeLeft: 60,
+  matchedName: "",
   handleCardItemClick: () => {},
   disabledCards: false,
   checkWin: () => false,
@@ -53,6 +55,9 @@ const MemoryProvider = ({ children }: MemoryProviderType) => {
   const [disabledCards, setDisabledCards] = useState<boolean>(false);
   const [round, setRound] = useState<number>(initialState.round);
   const [gameOver, setGameOver] = useState<boolean>(initialState.gameOver);
+  const [matchedName, setMatchedName] = useState<string>(
+    initialState.matchedName
+  );
   const [matchedImage, setMatchedImage] = useState<string>(
     initialState.matchedImage
   );
@@ -137,8 +142,9 @@ const MemoryProvider = ({ children }: MemoryProviderType) => {
   const colseMatchedImage = () => {
     setMatchedImageModal(false);
   };
-  const showMatchedImage = (image: string) => {
+  const showMatchedImage = (image: string, name: string) => {
     setMatchedImage(image);
+    setMatchedName(name);
     setMatchedImageModal(true);
   };
   useEffect(() => {
@@ -163,7 +169,7 @@ const MemoryProvider = ({ children }: MemoryProviderType) => {
         setTimeout(() => {
           audio.pause();
         }, 2000);
-        showMatchedImage(choiceOne.image);
+        showMatchedImage(choiceOne.image, choiceOne.name);
         resetTurn();
       } else {
         setTimeout(() => {
@@ -231,6 +237,7 @@ const MemoryProvider = ({ children }: MemoryProviderType) => {
     timeLeft,
     handleCardItemClick,
     handleGameOver,
+    matchedName,
     disabledCards,
     checkWin,
   };

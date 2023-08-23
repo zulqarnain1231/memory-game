@@ -18,6 +18,7 @@ const CardsContainer = () => {
     matchedImageModal,
     colseMatchedImage,
     gameOver,
+    matchedName,
     startGame,
   } = useMemoryCards();
 
@@ -84,22 +85,26 @@ const CardsContainer = () => {
         open={matchedImageModal}
         onClose={colseMatchedImage}
       >
-        <div className={`w-[330px] h-[300px]`}>
+        <div className={`w-[330px] h-[350px]`}>
           <button
             onClick={colseMatchedImage}
             className="w-[32px] h-[32px] absolute -top-8 right-0  flex justify-center items-center z-10 "
           >
             <MdOutlineCancel className="h-full w-full text-white" />
           </button>
-
-          <div className="w-full h-full relative rounded-lg">
-            <Image
-              src={matchedImage}
-              alt=""
-              className="object-cover rounded-lg"
-              fill
-              loading="eager"
-            />
+          <div className="w-full h-full flex flex-col items-center justify-start gap-3">
+            <div className="w-full h-[300px] relative rounded-lg">
+              <Image
+                src={matchedImage}
+                alt=""
+                className="object-cover rounded-t-lg"
+                fill
+                loading="eager"
+              />
+            </div>
+            <p className="text-black text-center text-lg font-medium">
+              {matchedName}
+            </p>
           </div>
         </div>
       </Dialog>
